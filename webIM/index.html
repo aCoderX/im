@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="login">
+    <input type="text" id='username'>
+    <input type="password" id="password">
+    <input id="login_btn" type="button" value="login">
+</div>
+<div id="main" style="display: none">
+    <select id="targetP">
+        <option value="1">1</option>
+        <option value="2">2</option>
+    </select>
+    <input id="content" type="text">
+    <input id="send" type="button" value="发送">
+</div>
+
+<script type="text/javascript" src="js/jquery_1.8.3.js"></script>
+<script type="text/javascript" src="js/requestObj.js"></script>
+<script>
+    var user={};
+    $('#login_btn').click(function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var reqId = requestObj.getRequestID();
+        var message = 'REQ\tCMD_LOGIN\t'+username+'\t00001\t'+reqId+"\t"+"0\t"+username+"\t"+password;
+        requestObj.send(message,function(subs){
+            var res = subs[0];
+            console.log(res)
+            user.name = res[6];
+            user.id = res[3];
+            alert("welcome"+res[6])
+            $('#main').show();
+        })
+    })
+    $('#send').click(function(event) {
+        var targetId = $('#targetP').val();
+        var content = $('#content').val();
+        var reqId = requestObj.getRequestID();
+        var message = 'NOTICE\tCMD_TEXT\t'+user.id+'\t'+targetId+'\t'+reqId+"\t"+"0\t"+content+"\t";
+        requestObj.send(message,function(subs){
+            alert("success")
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dataOperation/dataOperation.iml" filepath="$PROJECT_DIR$/dataOperation/dataOperation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dealUnit/dealUnit.iml" filepath="$PROJECT_DIR$/dealUnit/dealUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dealUnit_DealLogic/dealUnit_DealLogic.iml" filepath="$PROJECT_DIR$/dealUnit_DealLogic/dealUnit_DealLogic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exchangeServer/exchangeServer.iml" filepath="$PROJECT_DIR$/exchangeServer/exchangeServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/im.iml" filepath="$PROJECT_DIR$/im.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imEntity/imEntity.iml" filepath="$PROJECT_DIR$/imEntity/imEntity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/socketAcceptServer/socketAcceptServer.iml" filepath="$PROJECT_DIR$/socketAcceptServer/socketAcceptServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webIM/webIM.iml" filepath="$PROJECT_DIR$/webIM/webIM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webSocketAcceptServer/webSocketAcceptServer.iml" filepath="$PROJECT_DIR$/webSocketAcceptServer/webSocketAcceptServer.iml" />
+    </modules>
+  </component>
+</project>
