@@ -1,14 +1,10 @@
 package com.acoderx.im.du.logic.login;
 
-import com.acoderx.im.data.Test;
 import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.du.logic.common.MessageDeal;
 import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
-import com.acoderx.im.redis.RedisKey;
 import com.acoderx.im.redis.RedisKeyUserInfo;
-
-import java.util.Map;
 
 
 public class LO_CMD_Login extends MessageDeal {
@@ -17,12 +13,8 @@ public class LO_CMD_Login extends MessageDeal {
 		redisOps = new RedisOps();
 	}
 	public DataPacketInner deal(DataPacketInner req){
-		//String request = new String(req.getBody(),"UTF-8");
 		DataPacket dp = req.getMessage();
 
-		/*String data[] = req.split("\t");
-		String s[] = data[3].split("\\|");*/
-		//Test redis = new Test();
 		String[] subs = dp.getSubField().split("\t");
 		String account = subs[0];
 
@@ -38,12 +30,7 @@ public class LO_CMD_Login extends MessageDeal {
 			redisOps.opsForSet().add(new RedisKeyUserInfo.UserSessions(id),req.getSessionID());
 			//sessionid关联userid
 			redisOps.opsForValue().set(new RedisKeyUserInfo.SessionUser(req.getSessionID()),id);
-
 		}
-		//System.out.println(userInfo.toString());
-		//String result = data[0]+"\t"+data[2]+"\t"+data[1]+"\t"+userInfo.toString();
-		//String result = userInfo.toString();
-
 		return dpiAck;
 	}
 }

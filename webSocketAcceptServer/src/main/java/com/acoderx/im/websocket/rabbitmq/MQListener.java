@@ -19,7 +19,7 @@ import static com.acoderx.im.entity.DataPacketUtil.getDataPacketTransform;
  * Created by xiaobaibai on 2016/12/26.
  */
 public class MQListener implements MessageListener {
-    private static Logger logger = LoggerConf.getLogger(MQListener.class);
+    //private static Logger logger = LoggerConf.getLogger(MQListener.class);
 
 
     public void onMessage(Message message) {
