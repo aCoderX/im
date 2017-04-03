@@ -14,6 +14,13 @@ public class SessionProperty {
         this.chanelId = chanelId;
     }
 
+    public SessionProperty(String session) {
+        String[] results = session.split(":");
+        this.host = results[0];
+        this.port = Integer.parseInt(results[1]);
+        this.chanelId = results[2];
+    }
+
     public String getHost() {
         return host;
     }

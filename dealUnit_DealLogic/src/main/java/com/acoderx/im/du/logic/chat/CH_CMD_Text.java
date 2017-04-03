@@ -10,13 +10,7 @@ import com.acoderx.im.entity.DataPacketInner;
  * Created by xiaobaibai on 2017/2/20.
  */
 public class CH_CMD_Text extends MessageDeal {
-    /*private RedisOps redisOps;
-    public CH_CMD_Text(){
-        this.redisOps = new RedisOps();
-    }*/
-
     private CO_MQ_Sender sender = CO_MQ_Sender.getInstance();
-
 
     public DataPacketInner deal(DataPacketInner req) throws Exception {
         DataPacket dp = req.getMessage();

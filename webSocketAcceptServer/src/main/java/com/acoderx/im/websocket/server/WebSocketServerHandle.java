@@ -56,7 +56,7 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("connect");
+        logger.info("WEBSOCKET:"+"create connect");
         channels.add(ctx.channel());
         super.channelActive(ctx);
     }
@@ -67,12 +67,12 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("cut");
         super.channelInactive(ctx);
         //断开连接，发送下线指令
         ChannelId channelId = ctx.channel().id();
         String sessionId = UserChannels.getKey(channelId);
         if(sessionId!=null){
+            logger.info("WEBSOCKET:"+"session:"+sessionId+"断开连接");
             //下线包
             DataPacket dp = new DataPacket("REQ","CMD_LOGOUT","00001","00001",0,(int) (System.currentTimeMillis() / 1000),"Z");
             DataPacketInner dpi = new DataPacketInner(sessionId,"00001",dp);
@@ -144,31 +144,21 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
         }
 
         String request = ((TextWebSocketFrame) frame).text();
-        System.out.println(request);
         DataPacket dp = new DataPacket(request);
-        System.out.println(dp.toString());
+        logger.info("WEBSOCKET:"+dp.toString());
         int nowTime = (int) (System.currentTimeMillis() / 1000);
         dp.setMsgTime(nowTime);
-        SessionProperty sessionProperty = new SessionProperty("127.0.0.1",9999,ctx.channel().id().asShortText());
+        SessionProperty sessionProperty = new SessionProperty(WebSocketServer.HOST,WebSocketServer.PORT,ctx.channel().id().asShortText());
 
-        //String data[] = request.split("\t");
-       // String s[] = data[3].split("\\|");
         if("CMD_LOGIN".equals(dp.getCMD())){
             //如果是登录，加入channel
-            //ctx.channel().id().asLongText();
             UserChannels.put(sessionProperty.toString(),ctx.channel().id());
-            System.out.println(UserChannels.size());
+            logger.info("WEBSOCKET:"+"session:"+sessionProperty.toString()+"登录，"+WebSocketServer.HOST+"在线人数"+UserChannels.size());
         }
 
         DataPacketInner dpi = new DataPacketInner(sessionProperty.toString(),"000001",dp);
 
-
-        //logger.info(dp.getOriginId()+"发送给用户"+dp.getTargetId());
-        System.out.println(dp.getOriginId()+"发送给用户"+dp.getTargetId());
-        System.out.println(dpi.toString());
-        /*TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString()
-                + ctx.channel().id() + "：" + request);*/
-        //ctx.channel().writeAndFlush(tws);
+        logger.info("WEBSOCKET:"+dp.getOriginId()+"发送给用户"+dp.getTargetId()+dp.getSubField());
 
         mqSender.send(dpi);
 

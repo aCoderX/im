@@ -19,7 +19,6 @@ public class LO_CMD_Login extends MessageDeal {
 		String account = subs[0];
 
 		String id = redisOps.opsForHash().get(new RedisKeyUserInfo.UserAccountID(account), account);
-		System.out.println("id:"+id);
 		DataPacketInner dpiAck = null;
 		if(id!=null){
 			String username = redisOps.opsForHash().get(new RedisKeyUserInfo.UserInfo(id), RedisKeyUserInfo.userInfo_NAME);

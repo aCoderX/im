@@ -1,11 +1,12 @@
 package com.acoderx.im.exchange.listener;
 
 import com.acoderx.im.data.operation.RedisOps;
-import com.acoderx.im.entity.DataPacket;
-import com.acoderx.im.entity.DataPacketInner;
-import com.acoderx.im.entity.DataPacketUtil;
+import com.acoderx.im.entity.*;
+import com.acoderx.im.exchange.main.ExchangeServer;
 import com.acoderx.im.exchange.sender.MQSender;
 import com.acoderx.im.redis.RedisKeyUserInfo;
+import org.apache.log4j.Logger;
+import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.Set;
 public class MQDealUnitListener implements MessageListener{
     @Autowired
     private MQSender mqSender;
+    private Logger logger = LoggerConf.getLogger(MQDealUnitListener.class);
     public void onMessage(Message message) {
 
         DataPacketInner dpi = DataPacketUtil.getDataPacketTransform().byteToInnerObject(message.getBody());
@@ -45,12 +47,19 @@ public class MQDealUnitListener implements MessageListener{
         String targetId = dp.getTargetId();
         Set<String> targetSessions = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions(targetId));
         if(targetSessions==null||targetSessions.size()<=0){
+            logger.error("EXCHANGE："+"接受者不在线");
             return;
         }
         for(String targetSession : targetSessions){
-            DataPacketInner dpiSend = new DataPacketInner(targetSession, dpi.getTargetId(), dp);
-            //TDDO 根据session判断是否是本机，现在默认是本机
-            mqSender.send(dpiSend,"EXCHANGE.TO.WEBSOCKET");
+            if(ExchangeServer.HOST.equals(new SessionProperty(targetSession).getHost())){
+                //本机的session
+                DataPacketInner dpiSend = new DataPacketInner(targetSession, dpi.getTargetId(), dp);
+                mqSender.send(dpiSend,"EXCHANGE.TO.WEBSOCKET");
+            }else{
+                logger.info("EXCHANGE:"+"接受者不在本机，位于"+ExchangeServer.HOST);
+                //TODO 根据session判断是否是本机，现在默认是本机
+            }
+
         }
     }
 }
