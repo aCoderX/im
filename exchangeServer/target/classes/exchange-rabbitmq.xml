@@ -33,13 +33,16 @@
     <!--定义queue -->
     <rabbit:queue name="MSG_FROM_WEBSOCKET_TO_EXCHANGE" durable="false" auto-delete="false" exclusive="false"/>
     <rabbit:queue name="MSG_FROM_DEALUNIT_TO_EXCHANGE" durable="false" auto-delete="false" exclusive="false"/>
+    <rabbit:queue name="MSG_FROM_OTHEREXCHANGE_TO_EXCHANGE" durable="false" auto-delete="false" exclusive="false"/>
     <bean id="messageReceiver_WebSocket" class="com.acoderx.im.exchange.listener.MQWebSocketListener"></bean>
     <bean id="messageReceiver_DealUnit" class="com.acoderx.im.exchange.listener.MQDealUnitListener"></bean>
+    <bean id="messageReceiver_OtherExchange" class="com.acoderx.im.exchange.listener.OtherExchangeListener"></bean>
 
     <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
     <rabbit:listener-container connection-factory="connectionFactory">
         <rabbit:listener queues="MSG_FROM_WEBSOCKET_TO_EXCHANGE" ref="messageReceiver_WebSocket"/>
         <rabbit:listener queues="MSG_FROM_DEALUNIT_TO_EXCHANGE" ref="messageReceiver_DealUnit"/>
+        <rabbit:listener queues="MSG_FROM_OTHEREXCHANGE_TO_EXCHANGE" ref="messageReceiver_OtherExchange"/>
     </rabbit:listener-container>
 
 

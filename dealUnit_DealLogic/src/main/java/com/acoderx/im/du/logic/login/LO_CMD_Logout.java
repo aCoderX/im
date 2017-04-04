@@ -20,7 +20,7 @@ public class LO_CMD_Logout extends MessageDeal {
         String userId = redisOps.opsForValue().get(new RedisKeyUserInfo.SessionUser(sessionId));
         redisOps.opsForSet().remove(new RedisKeyUserInfo.UserSessions(userId),sessionId);
         redisOps.opsForKey().delete(new RedisKeyUserInfo.SessionUser(sessionId));
-        logger.debug("用户"+userId+"下线");
+        logger.info("用户"+userId+"下线");
         DataPacketInner dpiAck = null;
         return dpiAck;
     }

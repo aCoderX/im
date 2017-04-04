@@ -18,6 +18,7 @@ public class MQSender {
     private Logger logger = LoggerConf.getLogger(MQSender.class);
 
     public void send(Message msg, String key){
+        logger.info("EXCHANGE:"+msg+"key:"+key);
         amqpTemplate.convertAndSend("Instant_Message",key,msg);
     }
     public void send(DataPacketInner dpi, String key){

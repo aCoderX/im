@@ -35,7 +35,7 @@ var requestObj= new function(){
 			};
 		};
 		this.initialize=function(){
-			this.connect('ws://127.0.0.1:9999');
+			this.connect('ws://172.16.192.1:9999');
 		}
 	};
 

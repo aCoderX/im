@@ -15,7 +15,7 @@ import java.util.Map;
 @Transactional
 public interface HashValueDao {
     @Select("select * from ${hashValue.tableName} a where a.key = #{hashValue.key}")
-    HashValue test(@Param(value = "hashValue") HashValue hashValue);
+    List<HashValue> test(@Param(value = "hashValue") HashValue hashValue);
 
     @Select("select * from ${hashValue.tableName} where `key` = #{hashValue.key}")
     List<HashValue> getHashKey(@Param(value = "hashValue") HashValue hashValue);

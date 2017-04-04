@@ -1,9 +1,6 @@
 package com.acoderx.im.entity;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * Created by xiaobaibai on 2017/2/9.
@@ -20,5 +17,19 @@ public class DataPacketTransform {
             e.printStackTrace();
         }
         return dpi;
+    }
+
+    public byte[] innerObjectToByte(DataPacketInner dpi){
+        byte[] bytes = null;
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bo);
+            out.writeObject(dpi);
+            bytes = bo.toByteArray();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
     }
 }
