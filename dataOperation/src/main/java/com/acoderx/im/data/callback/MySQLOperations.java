@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Created by xiaobaibai on 2017/2/14.
+ * Created by xudi on 2017/2/14.
  */
 public class MySQLOperations {
     private static MySQLOperations mysqlOperation = new MySQLOperations();

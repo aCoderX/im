@@ -7,7 +7,7 @@ import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.entity.DataPacketUtil;
 import com.acoderx.im.entity.LoggerConf;
 import com.sun.org.apache.regexp.internal.RE;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import static com.acoderx.im.entity.DataPacketUtil.getDataPacketTransform;
 
 
 /**
- * Created by xiaobaibai on 2016/12/28.
+ * Created by xudi on 2016/12/28.
  */
 @Component
 public class MQListener implements MessageListener{

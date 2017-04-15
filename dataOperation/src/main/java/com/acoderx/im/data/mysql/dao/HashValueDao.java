@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by xiaobaibai on 2017/2/14.
+ * Created by xudi on 2017/2/14.
  */
 @Transactional
 public interface HashValueDao {

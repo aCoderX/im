@@ -9,7 +9,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 /**
- * Created by xiaobaibai on 2017/2/12.
+ * Created by xudi on 2017/2/12.
  */
 public class RedisOpsTest {
     @Test

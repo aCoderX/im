@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by xiaobaibai on 2017/3/5.
+ * Created by xudi on 2017/3/5.
  */
 public interface SetOperation {
     Set<String> difference(RedisKey key, RedisKey otherKey);

@@ -5,7 +5,7 @@ import com.acoderx.im.du.logic.login.LO_CMD_Login;
 import com.acoderx.im.du.logic.login.LO_CMD_Logout;
 
 /**
- * Created by xiaobaibai on 2017/2/7.
+ * Created by xudi on 2017/2/7.
  */
 public class MessageDealFactory{
     public static MessageDeal getMessageDeal(String cmd){

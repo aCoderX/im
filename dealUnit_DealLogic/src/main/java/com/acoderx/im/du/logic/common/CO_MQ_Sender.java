@@ -2,7 +2,7 @@ package com.acoderx.im.du.logic.common;
 
 import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.entity.LoggerConf;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

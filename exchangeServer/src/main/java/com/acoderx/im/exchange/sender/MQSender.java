@@ -2,14 +2,14 @@ package com.acoderx.im.exchange.sender;
 
 import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.entity.LoggerConf;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by xiaobaibai on 2016/12/28.
+ * Created by xudi on 2016/12/28.
  */
 @Component
 public class MQSender {

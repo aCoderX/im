@@ -8,7 +8,7 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 
 /**
- * @author xiaobaibai
+ * @author xudi
  * @date 2016/12/26
  * 
 */

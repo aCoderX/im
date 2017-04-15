@@ -3,7 +3,7 @@ package com.acoderx.im.entity;
 import java.io.Serializable;
 
 /**
- * Created by xiaobaibai on 2017/2/9.
+ * Created by xudi on 2017/2/9.
  */
 public class DataPacketInner implements Serializable {
     private String sessionID;

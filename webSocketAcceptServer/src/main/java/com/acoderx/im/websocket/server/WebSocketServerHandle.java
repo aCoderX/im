@@ -2,6 +2,7 @@ package com.acoderx.im.websocket.server;
 
 import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
+import com.acoderx.im.entity.LoggerConf;
 import com.acoderx.im.entity.SessionProperty;
 import com.acoderx.im.websocket.rabbitmq.MQSender;
 import io.netty.buffer.ByteBuf;
@@ -14,7 +15,7 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,14 +25,14 @@ import java.util.Map;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
- * @author xiaobaibai
+ * @author xudi
  * @date 2016/12/26
  * 
 */
 @Component
 public class WebSocketServerHandle extends SimpleChannelInboundHandler {
     private WebSocketServerHandshaker handshaker;
-    private Logger logger = Logger.getLogger(WebSocketServerHandle.class);
+    private Logger logger = LoggerConf.getLogger(WebSocketServerHandle.class);
 
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final DualHashBidiMap<String,ChannelId> UserChannels = new DualHashBidiMap();

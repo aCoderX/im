@@ -1,17 +1,12 @@
 package com.acoderx.im.data;
 
-import com.acoderx.im.data.callback.MySQLOperations;
 import com.acoderx.im.data.mysql.model.HashValue;
 import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.redis.RedisKeyUserInfo;
-import redis.clients.jedis.Jedis;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
- * Created by xiaobaibai on 2017/2/5.
+ * Created by xudi on 2017/2/5.
  */
 public class Test {
     public static void main(String[] args) {

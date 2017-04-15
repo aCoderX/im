@@ -12,7 +12,7 @@ import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
 
 
 /**
- * Created by xiaobaibai on 2017/3/5.
+ * Created by xudi on 2017/3/5.
  */
 public class SetOperationsProxy implements SetOperation {
     private SetOperations<String,String> setOperations;

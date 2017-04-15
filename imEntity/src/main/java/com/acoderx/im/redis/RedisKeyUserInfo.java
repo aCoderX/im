@@ -1,7 +1,7 @@
 package com.acoderx.im.redis;
 
 /**
- * Created by xiaobaibai on 2017/2/12.
+ * Created by xudi on 2017/2/12.
  */
 public class RedisKeyUserInfo {
     public static String userInfo_ACC="account";

@@ -1,11 +1,11 @@
 package com.acoderx.im.exchange.main;
 
 import com.acoderx.im.entity.LoggerConf;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Created by xiaobaibai on 2016/12/28.
+ * Created by xudi on 2016/12/28.
  */
 public class ExchangeServer {
     private static Logger logger = LoggerConf.getLogger(ExchangeServer.class);

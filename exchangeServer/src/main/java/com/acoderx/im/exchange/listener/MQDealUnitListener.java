@@ -6,7 +6,7 @@ import com.acoderx.im.exchange.main.ExchangeServer;
 import com.acoderx.im.exchange.sender.MQSender;
 import com.acoderx.im.exchange.sender.OtherMQSender;
 import com.acoderx.im.redis.RedisKeyUserInfo;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Created by xiaobaibai on 2016/12/28.
+ * Created by xudi on 2016/12/28.
  */
 @Component
 public class MQDealUnitListener implements MessageListener{

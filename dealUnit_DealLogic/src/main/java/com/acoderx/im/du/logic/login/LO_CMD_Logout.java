@@ -7,10 +7,10 @@ import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.entity.LoggerConf;
 import com.acoderx.im.redis.RedisKeyUserInfo;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 /**
- * Created by xiaobaibai on 2017/2/20.
+ * Created by xudi on 2017/2/20.
  */
 public class LO_CMD_Logout extends MessageDeal {
     private Logger logger = LoggerConf.getLogger(LO_CMD_Logout.class);

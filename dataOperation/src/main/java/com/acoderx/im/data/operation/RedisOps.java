@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 
 /**
- * Created by xiaobaibai on 2017/2/12.
+ * Created by xudi on 2017/2/12.
  */
 public class RedisOps {
 

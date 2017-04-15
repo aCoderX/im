@@ -3,7 +3,7 @@ package com.acoderx.im.entity;
 import java.io.Serializable;
 
 /**
- * Created by xiaobaibai on 2017/2/8.
+ * Created by xudi on 2017/2/8.
  */
 public class DataPacket implements Serializable {
     private String cmdType;//命令种类

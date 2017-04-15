@@ -3,7 +3,7 @@ package com.acoderx.im.entity;
 import java.io.*;
 
 /**
- * Created by xiaobaibai on 2017/2/9.
+ * Created by xudi on 2017/2/9.
  */
 public class DataPacketTransform {
     public DataPacketInner byteToInnerObject(byte[] bytes){

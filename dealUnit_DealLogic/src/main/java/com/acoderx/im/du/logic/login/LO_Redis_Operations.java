@@ -5,7 +5,7 @@ import com.acoderx.im.data.redis.interf.HashOperation;
 import com.acoderx.im.redis.RedisKeyUserInfo;
 
 /**
- * Created by xiaobaibai on 2017/2/12.
+ * Created by xudi on 2017/2/12.
  */
 public class LO_Redis_Operations {
     private RedisOps redisOps;

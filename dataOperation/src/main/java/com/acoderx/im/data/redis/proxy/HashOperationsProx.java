@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import static com.acoderx.im.redis.RedisDataType.HASH;
 
 /**
- * Created by xiaobaibai on 2017/2/12.
+ * Created by xudi on 2017/2/12.
  */
 public class HashOperationsProx implements HashOperation {
 

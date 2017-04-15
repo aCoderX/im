@@ -13,6 +13,7 @@
     <module>dealUnit</module>
     <module>dealUnit_DealLogic</module>
     <module>imEntity</module>
+    <module>imLoggerServer</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -22,6 +23,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <slf4j.version>1.7.21</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <junit.version>4.12</junit.version>
 
@@ -47,13 +49,20 @@
     <imEntity.version>1.0-SNAPSHOT</imEntity.version>
     <dealLogic.version>1.0-SNAPSHOT</dealLogic.version>
     <dataOperation.version>1.0-SNAPSHOT</dataOperation.version>
+
+    <imLoggerServer.version>1.0-SNAPSHOT</imLoggerServer.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -130,8 +139,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>

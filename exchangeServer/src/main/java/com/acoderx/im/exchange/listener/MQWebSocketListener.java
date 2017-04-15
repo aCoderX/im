@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Created by xiaobaibai on 2016/12/28.
+ * Created by xudi on 2016/12/28.
  */
 @Component
 public class MQWebSocketListener implements MessageListener{

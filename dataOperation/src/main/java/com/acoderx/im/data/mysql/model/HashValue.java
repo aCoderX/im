@@ -1,7 +1,7 @@
 package com.acoderx.im.data.mysql.model;
 
 /**
- * Created by xiaobaibai on 2017/2/14.
+ * Created by xudi on 2017/2/14.
  */
 public class HashValue {
     private String tableName;

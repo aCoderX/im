@@ -7,7 +7,7 @@ import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
 
 /**
- * Created by xiaobaibai on 2017/2/20.
+ * Created by xudi on 2017/2/20.
  */
 public class CH_CMD_Text extends MessageDeal {
     private CO_MQ_Sender sender = CO_MQ_Sender.getInstance();

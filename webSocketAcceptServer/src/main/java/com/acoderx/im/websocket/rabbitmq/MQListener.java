@@ -6,7 +6,7 @@ import com.acoderx.im.entity.LoggerConf;
 import com.acoderx.im.websocket.server.WebSocketServerHandle;
 import io.netty.channel.ChannelId;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException;
 import static com.acoderx.im.entity.DataPacketUtil.getDataPacketTransform;
 
 /**
- * Created by xiaobaibai on 2016/12/26.
+ * Created by xudi on 2016/12/26.
  */
 public class MQListener implements MessageListener {
     private Logger logger = LoggerConf.getLogger(MQListener.class);

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/rabbit
+     http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+    <!--配置connection-factory，指定连接rabbit server参数 -->
+    <rabbit:connection-factory id="connectionFactory" host="${im.logger.host}" port="${im.logger.port}" username="${im.rabbitmq.username}" password="${im.rabbitmq.password}"/>
+
+    <!--定义rabbit template用于数据的接收和发送 -->
+    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory" />
+
+    <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!--发送-->
+    <!--定义发送的queue-->
+    <rabbit:queue name="MSG_IM_TO_LOGGER_DEBUG" auto-delete="false" durable="false" exclusive="false"/>
+    <rabbit:queue name="MSG_IM_TO_LOGGER_INFO" auto-delete="false" durable="false" exclusive="false"/>
+    <rabbit:queue name="MSG_IM_TO_LOGGER_WARN" auto-delete="false" durable="false" exclusive="false"/>
+    <rabbit:queue name="MSG_IM_TO_LOGGER_ERROR" auto-delete="false" durable="false" exclusive="false"/>
+
+    <bean id="messageReceiver_Logger_debug" class="com.acoderx.im.logger.listener.DebugLoggerListen"/>
+    <bean id="messageReceiver_Logger_info" class="com.acoderx.im.logger.listener.InfoLoggerListen"/>
+    <bean id="messageReceiver_Logger_warn" class="com.acoderx.im.logger.listener.WarnLoggerListen"/>
+    <bean id="messageReceiver_Logger_error" class="com.acoderx.im.logger.listener.ErrorLoggerListen"/>
+
+    <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener queues="MSG_IM_TO_LOGGER_DEBUG" ref="messageReceiver_Logger_debug"/>
+        <rabbit:listener queues="MSG_IM_TO_LOGGER_INFO" ref="messageReceiver_Logger_info"/>
+        <rabbit:listener queues="MSG_IM_TO_LOGGER_WARN" ref="messageReceiver_Logger_warn"/>
+        <rabbit:listener queues="MSG_IM_TO_LOGGER_ERROR" ref="messageReceiver_Logger_error"/>
+    </rabbit:listener-container>
+
+</beans>
