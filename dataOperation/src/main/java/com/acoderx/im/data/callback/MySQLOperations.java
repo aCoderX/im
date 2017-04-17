@@ -1,7 +1,7 @@
 package com.acoderx.im.data.callback;
 
 import com.acoderx.im.data.mysql.dao.HashValueDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.acoderx.im.data.mysql.dao.SetValueDao;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -10,12 +10,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MySQLOperations {
     private static MySQLOperations mysqlOperation = new MySQLOperations();
 
-    @Autowired
     private HashValueDao hashValueDao;
+    private SetValueDao setValueDao;
 
     private MySQLOperations(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dataoperation_mybatis_beans.xml");
         hashValueDao = (HashValueDao) context.getBean("hashValueDao");
+        setValueDao = (SetValueDao) context.getBean("setValueDao");
     }
 
     public static MySQLOperations getInstance(){
@@ -24,5 +25,8 @@ public class MySQLOperations {
 
     public HashValueDao getHashValueDao(){
         return hashValueDao;
+    }
+    public SetValueDao getSetValueDao(){
+        return setValueDao;
     }
 }

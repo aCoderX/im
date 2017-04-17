@@ -35,9 +35,9 @@ var requestObj= new function(){
 			};
 		};
 		this.initialize=function(){
-			//this.connect('ws://172.16.192.1:9999');
+			this.connect('ws://172.16.192.1:9999');
 			//nginx地址
-			this.connect('ws://172.16.192.1/im');
+			//this.connect('ws://172.16.192.1/im');
 		}
 	};
 

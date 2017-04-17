@@ -13,8 +13,6 @@
 </div>
 <div id="main" style="display: none">
     <select id="targetP">
-        <option value="1">1</option>
-        <option value="2">2</option>
     </select>
     <input id="content" type="text">
     <input id="send" type="button" value="发送">
@@ -24,6 +22,27 @@
 <script type="text/javascript" src="js/requestObj.js"></script>
 <script>
     var user={};
+    var friendsInfo={};
+    function init() {
+        var reqId = requestObj.getRequestID();
+        var message = 'REQ\tCMD_INIT\t'+user.id+'\t00001\t'+reqId+"\t"+"0\t";
+        requestObj.send(message,function(subs){
+            var res = subs[0];
+            console.log(res)
+            var friendsInfoStr = res[6].split('\t',-1);
+            for (var friendInfo in friendsInfoStr){
+                var s = friendsInfoStr[friendInfo].split('|');
+                friendsInfo[s[0]+'']={
+                    'id':s[0],
+                    'name':s[1]
+                };
+            }
+            for(var p in friendsInfo){
+                $("#targetP").append("<option value="+p+">"+friendsInfo[p].name+"</option>");
+            }
+            $('#main').show();
+        })
+    }
     $('#login_btn').click(function () {
         var username = $('#username').val();
         var password = $('#password').val();
@@ -35,7 +54,7 @@
             user.name = res[6];
             user.id = res[3];
             alert("welcome"+res[6])
-            $('#main').show();
+            init();
         })
     })
     $('#send').click(function(event) {
@@ -47,6 +66,7 @@
             alert("success")
         });
     });
+
 </script>
 </body>
 </html>

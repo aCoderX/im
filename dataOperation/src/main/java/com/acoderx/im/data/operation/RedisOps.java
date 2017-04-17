@@ -8,6 +8,7 @@ import com.acoderx.im.data.redis.proxy.HashOperationsProx;
 import com.acoderx.im.data.redis.proxy.KeyOperationsProxy;
 import com.acoderx.im.data.redis.proxy.SetOperationsProxy;
 import com.acoderx.im.data.redis.proxy.ValueOperationsProxy;
+import com.acoderx.im.redis.RedisKey;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,10 +19,21 @@ import org.springframework.data.redis.core.ValueOperations;
  * Created by xudi on 2017/2/12.
  */
 public class RedisOps {
+    private static RedisOps redisOps;
+    public static RedisOps getInstance(){
+        if(redisOps==null){
+            synchronized (RedisOps.class){
+                if(redisOps==null){
+                    redisOps = new RedisOps();
+                }
+            }
+        }
+        return redisOps;
+    }
 
     private RedisTemplate<String, String> redisTemplate;
 
-    public RedisOps(){
+    private RedisOps(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("dataoperation_redis.xml");
         redisTemplate = (RedisTemplate<String, String>) context.getBean("redisTemplate");
     }

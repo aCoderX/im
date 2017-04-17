@@ -1,6 +1,7 @@
 package com.acoderx.im.du.logic.common;
 
 import com.acoderx.im.du.logic.chat.CH_CMD_Text;
+import com.acoderx.im.du.logic.login.LO_CMD_Init;
 import com.acoderx.im.du.logic.login.LO_CMD_Login;
 import com.acoderx.im.du.logic.login.LO_CMD_Logout;
 
@@ -16,6 +17,8 @@ public class MessageDealFactory{
             deal = new LO_CMD_Logout();
         }else if("CMD_TEXT".equals(cmd)){
             deal = new CH_CMD_Text();
+        }else if("CMD_INIT".equals(cmd)){
+            deal = new LO_CMD_Init();
         }
         return deal;
     }

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class RedisOpsTest {
     @Test
     public void opsForHash() throws Exception {
-        RedisOps redisOps = new RedisOps();
+        RedisOps redisOps = RedisOps.getInstance();
 
         redisOps.opsForSet().add(new RedisKeyUserInfo.UserSessions("222"),"ssss","111","222");
         Set<String> s = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions("1"));

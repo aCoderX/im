@@ -4,7 +4,9 @@ import com.acoderx.im.data.callback.MySQLOperations;
 import com.acoderx.im.data.mysql.dao.HashValueDao;
 import com.acoderx.im.data.mysql.model.HashValue;
 import com.acoderx.im.data.redis.interf.HashOperation;
+import com.acoderx.im.entity.LoggerConf;
 import com.acoderx.im.redis.RedisKey;
+import org.slf4j.Logger;
 import org.springframework.data.redis.core.HashOperations;
 
 import java.net.URLDecoder;
@@ -20,6 +22,7 @@ import static com.acoderx.im.redis.RedisDataType.HASH;
  * Created by xudi on 2017/2/12.
  */
 public class HashOperationsProx implements HashOperation {
+    private Logger logger = LoggerConf.getLogger(HashOperationsProx.class);
 
     private HashOperations<String, String, String> hashOperations;
 
@@ -39,7 +42,7 @@ public class HashOperationsProx implements HashOperation {
         if(key.syncFlag()){
             if(this.hashOperations.getOperations().hasKey(key.keyName())==false){
                 //redis中没有就去mysql中查
-                System.out.println("查询mysql");
+                logger.info("DATAOPERATION:Hash查询mysql:"+key.keyName());
                 HashValueDao hashValueDao = MySQLOperations.getInstance().getHashValueDao();
                 HashValue hashValue = new HashValue();
                 hashValue.setTableName("HASHS_KEY_"+"1");

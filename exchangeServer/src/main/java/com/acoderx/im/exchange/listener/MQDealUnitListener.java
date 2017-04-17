@@ -48,7 +48,7 @@ public class MQDealUnitListener implements MessageListener{
     }
 
     private void dealNoticeMessage(DataPacketInner dpi){
-        RedisOps redisOps = new RedisOps();
+        RedisOps redisOps = RedisOps.getInstance();
         DataPacket dp = dpi.getMessage();
         String targetId = dp.getTargetId();
         Set<String> targetSessions = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions(targetId));

@@ -10,7 +10,7 @@ import com.acoderx.im.redis.RedisKeyUserInfo;
 public class LO_CMD_Login extends MessageDeal {
 	private RedisOps redisOps;
 	public LO_CMD_Login(){
-		redisOps = new RedisOps();
+		redisOps = RedisOps.getInstance();
 	}
 	public DataPacketInner deal(DataPacketInner req){
 		DataPacket dp = req.getMessage();

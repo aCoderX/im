@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by xudi on 2017/3/9.
  */
 public class LoggerConf {
-    public static final boolean SINGLE = false;
+    public static final boolean SINGLE = true;
     public static Logger getLogger(Class clazz){
         if(SINGLE){
             //单台机器

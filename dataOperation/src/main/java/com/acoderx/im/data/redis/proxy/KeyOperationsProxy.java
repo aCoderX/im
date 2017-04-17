@@ -32,7 +32,7 @@ public class KeyOperationsProxy implements KeyOperation {
     }
 
     public Boolean hasKey(RedisKey key) {
-        return null;
+        return redisTemplate.hasKey(key.keyName());
     }
 
     public Boolean expire(RedisKey key, long timeout, TimeUnit unit) {

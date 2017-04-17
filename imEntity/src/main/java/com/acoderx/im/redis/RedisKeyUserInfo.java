@@ -39,4 +39,12 @@ public class RedisKeyUserInfo {
             this.type = RedisDataType.STRING;
         }
     }
+
+    public static class UserFriends extends RedisKeyClass{
+        public UserFriends(String userid){
+            this.name = "USER:"+userid+":FRIENDS";
+            this.sync = true;
+            this.type = RedisDataType.SET;
+        }
+    }
 }

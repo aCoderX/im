@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 public class LO_CMD_Logout extends MessageDeal {
     private Logger logger = LoggerConf.getLogger(LO_CMD_Logout.class);
     public DataPacketInner deal(DataPacketInner req) throws Exception {
-        RedisOps redisOps = new RedisOps();
+        RedisOps redisOps = RedisOps.getInstance();
         String sessionId = req.getSessionID();
         String userId = redisOps.opsForValue().get(new RedisKeyUserInfo.SessionUser(sessionId));
         redisOps.opsForSet().remove(new RedisKeyUserInfo.UserSessions(userId),sessionId);
