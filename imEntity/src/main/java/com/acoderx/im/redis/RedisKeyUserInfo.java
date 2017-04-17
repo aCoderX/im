@@ -7,6 +7,13 @@ public class RedisKeyUserInfo {
     public static String userInfo_ACC="account";
     public static String userInfo_NAME="username";
 
+    public static class UserNextID extends RedisKeyClass{
+        public UserNextID(){
+            this.name = "USER:ID:NEXT";
+            this.sync = false;
+            this.type = RedisDataType.STRING;
+        }
+    }
 
     public static class UserInfo extends RedisKeyClass{
         public UserInfo(String userid){

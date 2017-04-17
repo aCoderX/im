@@ -88,7 +88,24 @@ public class HashOperationsProx implements HashOperation {
     }
 
     public void putAll(RedisKey key, Map<String, String> m) {
+        if(key.syncFlag()){
+            //需要存入mysql
+            logger.info("DATAOPERATION:存入mysql:"+key.keyName());
+            HashValueDao hashValueDao = MySQLOperations.getInstance().getHashValueDao();
 
+            for (Map.Entry<String, String> entry : m.entrySet()) {
+                HashValue hashValue = new HashValue();
+                hashValue.setTableName("HASHS_KEY_"+"1");
+                hashValue.setKey(key.keyName());
+                hashValue.setField(entry.getKey());
+                hashValue.setValue(entry.getValue());
+                hashValueDao.setHashValue(hashValue);
+            }
+            hashOperations.putAll(key.keyName(),m);
+            hashOperations.getOperations().expire(key.keyName(),1,TimeUnit.DAYS);
+        }else{
+            hashOperations.putAll(key.keyName(),m);
+        }
     }
 
     public void put(RedisKey key, String hashKey, String value) {

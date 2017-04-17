@@ -36,7 +36,7 @@ public class LO_CMD_Init extends MessageDeal {
             subField.append(userName);
             subField.append("\t");
         }
-        dpAck = new DataPacket("ACK","CMD_INIT",dp.getTargetId(),dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),subField.toString());
+        dpAck = new DataPacket("ACK",dp.getCMD(),dp.getTargetId(),dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),subField.toString());
         dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
         return dpiAck;
     }

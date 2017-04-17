@@ -1,6 +1,7 @@
 package com.acoderx.im.data.mysql.dao;
 
 import com.acoderx.im.data.mysql.model.HashValue;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +24,8 @@ public interface HashValueDao {
 
     @Select("select * from ${hashValue.tableName} where `key` = #{hashValue.key} and field = #{hashValue.field}")
     HashValue getHashValue(@Param(value = "hashValue") HashValue hashValue);
+
+    @Insert("insert into ${hashValue.tableName}(`key`,`field`,`value`) values(#{hashValue.key},#{hashValue.field},#{hashValue.value})")
+    void setHashValue(@Param(value = "hashValue") HashValue hashValue);
+
 }
