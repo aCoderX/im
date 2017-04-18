@@ -24,13 +24,12 @@ public class LO_CMD_Register extends MessageDeal{
         String phone = subs[0];
         String name = subs[1];
         String age = subs[2];
-        String nextId = redisOps.opsForValue().get(new RedisKeyUserInfo.UserNextID());
+        String nextId = redisOps.opsForValue().increment(new RedisKeyUserInfo.UserNextID(),1).toString();
         redisOps.opsForHash().put(new RedisKeyUserInfo.UserAccountID(phone),phone,nextId);
         Map<String,String> map = new HashMap<>();
         map.put("username",name);
         map.put("age",age);
         redisOps.opsForHash().putAll(new RedisKeyUserInfo.UserInfo(nextId),map);
-        //TODO 中文存在乱码
         StringBuilder subField=new StringBuilder();
         subField.append(nextId);
         subField.append("\t");
@@ -42,7 +41,6 @@ public class LO_CMD_Register extends MessageDeal{
         DataPacket dpAck = new DataPacket("ACK",dp.getCMD(),dp.getTargetId(),nextId,dp.getRandomNum(),dp.getMsgTime(),subField.toString());
         DataPacketInner dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
 
-        //TODO 返回的时候 由于是注册 所以没有session 找不到返回给谁
         return dpiAck;
     }
 }

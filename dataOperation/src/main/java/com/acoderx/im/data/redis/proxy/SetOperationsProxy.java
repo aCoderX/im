@@ -35,8 +35,10 @@ public class SetOperationsProxy implements SetOperation {
                 logger.info("DATAOPERATION:Set查询mysql:"+key.keyName());
                 SetValueDao setValueDao = MySQLOperations.getInstance().getSetValueDao();
                 Set<SetValue> members = setValueDao.getSetMembers(new SetValue("SETS_KEY_1",key.keyName()));
-                setOperations.add(key.keyName(),members.stream().map(a->a.getValue()).toArray(String[]::new));
-                setOperations.getOperations().expire(key.keyName(),1, TimeUnit.DAYS);
+                if(!members.isEmpty()){
+                    setOperations.add(key.keyName(),members.stream().map(a->a.getValue()).toArray(String[]::new));
+                    setOperations.getOperations().expire(key.keyName(),1, TimeUnit.DAYS);
+                }
                 return setOperations.members(key.keyName());
             }else{
                 setOperations.getOperations().expire(key.keyName(),1, TimeUnit.DAYS);

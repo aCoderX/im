@@ -54,7 +54,7 @@ public class ValueOperationsProxy implements ValueOperation {
     }
 
     public Long increment(RedisKey key, long delta) {
-        return null;
+        return valueOperations.increment(key.keyName(),delta);
     }
 
     public Double increment(RedisKey key, double delta) {

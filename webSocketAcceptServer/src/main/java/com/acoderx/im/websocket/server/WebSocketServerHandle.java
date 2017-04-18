@@ -36,6 +36,7 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
 
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final DualHashBidiMap<String,ChannelId> UserChannels = new DualHashBidiMap();
+    public static final DualHashBidiMap<String,ChannelId> tempChannels = new DualHashBidiMap();
 
     @Resource
     private MQSender mqSender;
@@ -80,7 +81,11 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
             mqSender.send(dpi);
             UserChannels.removeValue(ctx.channel().id());
         }
-
+        sessionId = tempChannels.getKey(channelId);
+        if(sessionId!=null){
+            logger.info("WEBSOCKET:"+"session:"+sessionId+"断注册开连接");
+            tempChannels.removeValue(ctx.channel().id());
+        }
     }
 
 
@@ -155,6 +160,9 @@ public class WebSocketServerHandle extends SimpleChannelInboundHandler {
             //如果是登录，加入channel
             UserChannels.put(sessionProperty.toString(),ctx.channel().id());
             logger.info("WEBSOCKET:"+"session:"+sessionProperty.toString()+"登录，"+WebSocketServer.HOST+"在线人数"+UserChannels.size());
+        }else if("CMD_REGISTER".equals(dp.getCMD())){
+            tempChannels.put(sessionProperty.toString(),ctx.channel().id());
+            logger.info("WEBSOCKET:"+"session:"+sessionProperty.toString()+"注册");
         }
 
         DataPacketInner dpi = new DataPacketInner(sessionProperty.toString(),"000001",dp);
