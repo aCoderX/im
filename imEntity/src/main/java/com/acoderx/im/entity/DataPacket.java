@@ -18,7 +18,7 @@ public class DataPacket implements Serializable {
 
     }
     public DataPacket(String message) {
-        String data[] = message.split("\t");
+        String data[] = message.split("\\t");
         this.cmdType=data[0];
         this.CMD=data[1];
         this.originId=data[2];

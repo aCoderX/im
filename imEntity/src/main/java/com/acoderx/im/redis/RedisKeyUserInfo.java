@@ -6,6 +6,7 @@ package com.acoderx.im.redis;
 public class RedisKeyUserInfo {
     public static String userInfo_ACC="account";
     public static String userInfo_NAME="username";
+    public static String userInfo_PASS="password";
 
     public static class UserNextID extends RedisKeyClass{
         public UserNextID(){

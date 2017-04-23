@@ -2,6 +2,7 @@ package com.acoderx.im.du.logic.login;
 
 import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.du.logic.common.MessageDeal;
+import com.acoderx.im.entity.CMDType;
 import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.entity.LoggerConf;
@@ -36,7 +37,7 @@ public class LO_CMD_Init extends MessageDeal {
             subField.append(userName);
             subField.append("\t");
         }
-        dpAck = new DataPacket("ACK",dp.getCMD(),dp.getTargetId(),dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),subField.toString());
+        dpAck = new DataPacket(CMDType.ACK,dp.getCMD(),dp.getTargetId(),dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),subField.toString());
         dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
         return dpiAck;
     }
