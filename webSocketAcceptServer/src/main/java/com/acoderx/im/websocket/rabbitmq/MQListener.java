@@ -31,6 +31,9 @@ public class MQListener implements MessageListener {
         DataPacketInner dpi = DataPacketUtil.getDataPacketTransform().byteToInnerObject(message.getBody());
 
         ChannelId channelId = WebSocketServerHandle.UserChannels.get(dpi.getSessionID());
+        if(channelId==null){
+            channelId = WebSocketServerHandle.tempChannels.get(dpi.getSessionID());
+        }
         if(channelId!=null){
             logger.info("WEBSOCKET:"+dpi);
             io.netty.channel.Channel c = WebSocketServerHandle.channels.find(channelId);

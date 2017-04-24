@@ -1,0 +1,38 @@
+*{
+    padding:0px;
+    margin: 0 auto;
+}
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+}
+
+#login{
+    padding-top: 200px;
+}
+#main{
+    height: 100%;
+    padding-top: 8%;
+}
+#content{
+    height:100%;
+}
+#friendList{
+    max-height: 70%;
+    overflow-y: auto;
+}
+#right_panel{
+    height: 70%;
+}
+#chatPanel{
+    overflow-y: auto;
+    height: 80%;
+}
+.my_text{
+    text-align: right;
+}
+#send{
+    cursor: pointer;
+}

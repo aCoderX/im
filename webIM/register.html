@@ -43,7 +43,8 @@
         var message = 'REQ\tCMD_REGISTER\t0\t00001\t'+reqId+"\t"+"0\t"+phone+"\t"+username+"\t"+password;
         requestObj.send(message,function(subs){
             var res = subs[0];
-            console.log(res)
+            alert("注册成功");
+            location.href = window.location.origin;
         })
     })
 

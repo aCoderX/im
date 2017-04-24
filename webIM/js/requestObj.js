@@ -6,6 +6,21 @@ var requestObj= new function(){
 	var requestMap={};
 	var packageNum={};
 
+	var noticeCallBack={
+		"CMD_TEXT":function (sub) {
+            var targetId = nowChat;
+			var id = sub[2];
+            if(undefined==chatRecord[id+""]){
+                chatRecord[id+'']=[];
+            }
+            var li = '<li class="list-group-item">'+sub[6]+'</li>';
+            chatRecord[id+''].push(li);
+            if(targetId==id){
+            	$('#chatPanel .list-group').append(li);
+			}
+        }
+	};
+
 	/*
 	 创建webSocket
 	 */
@@ -54,8 +69,8 @@ var requestObj= new function(){
 		}else{
 			//通知消息
 			console.log(Sub)
-			//发送SYNC消息
-			//requestObj.receiveNotice(Sub);
+
+			requestObj.receiveNotice(Sub);
 
 		}
 	}
@@ -104,6 +119,15 @@ var requestObj= new function(){
 		delete packageNum[random];
 		return;
 	};
+
+    //接受notice消息
+    this.receiveNotice=function(Sub){
+        console.log("notice接受数据："+Sub);
+        var cmd=Sub[1];
+        noticeCallBack[cmd](Sub);
+        return;
+    };
+
 
 	Chat.initialize();
 

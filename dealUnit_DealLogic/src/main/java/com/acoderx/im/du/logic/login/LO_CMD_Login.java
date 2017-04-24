@@ -4,10 +4,12 @@ import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.du.logic.common.MessageDeal;
 import com.acoderx.im.du.logic.error.LoginError;
 import com.acoderx.im.entity.CMDType;
+import com.acoderx.im.entity.Constants;
 import com.acoderx.im.entity.DataPacket;
 import com.acoderx.im.entity.DataPacketInner;
 import com.acoderx.im.redis.RedisKeyUserInfo;
 import com.acoderx.im.utils.MD5;
+import com.acoderx.im.utils.StringUtils;
 
 
 public class LO_CMD_Login extends MessageDeal {
@@ -28,7 +30,7 @@ public class LO_CMD_Login extends MessageDeal {
 			String username = redisOps.opsForHash().get(new RedisKeyUserInfo.UserInfo(id), RedisKeyUserInfo.userInfo_NAME);
 			String password = redisOps.opsForHash().get(new RedisKeyUserInfo.UserInfo(id), RedisKeyUserInfo.userInfo_PASS);
 			if(password.equals(MD5.encoderByMd5WithSalt(pass))){
-				DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(),dp.getTargetId(),id,dp.getRandomNum(),dp.getMsgTime(),username);
+				DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(),dp.getTargetId(),id,dp.getRandomNum(),dp.getMsgTime(), StringUtils.subFieldsTostring(Constants.SUCCESS,username));
 				dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
 				//将sessionid存入，userid关联sessionid
 				redisOps.opsForSet().add(new RedisKeyUserInfo.UserSessions(id),req.getSessionID());

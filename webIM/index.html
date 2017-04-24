@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>welcome</title>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-<div id="login">
+<div id="login" class="col-md-2 col-md-offset-5" style="display: block">
     <form>
         <div class="form-group">
             <input type="text" id="phone" class="form-control" placeholder="手机号" aria-describedby="basic-addon1">
@@ -21,62 +22,36 @@
     </form>
 </div>
 <div id="main" style="display: none">
-    <select id="targetP">
-    </select>
-    <input id="content" type="text">
-    <input id="send" type="button" value="发送">
+    <div id="content">
+        <ul class="list-group col-md-2 col-md-offset-2" id="friendList">
+            <a href="#" class="list-group-item disabled">
+                好友列表
+            </a>
+            <div id="friends">
+
+            </div>
+        </ul>
+        <div id="right_panel" class="col-md-6" style="display: none">
+            <h4 id="chat_title">骆飞</h4>
+            <div class="panel panel-info" id="chatPanel">
+                <ul class="list-group">
+
+                </ul>
+            </div>
+            <div class="">
+                <div class="input-group input-group">
+                    <input type="text" class="form-control" id="content_text" placeholder="输入" aria-describedby="sizing-addon1">
+                    <span class="input-group-addon" id="send">发送</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 <script type="text/javascript" src="js/jquery_1.8.3.js"></script>
 <script type="text/javascript" src="js/requestObj.js"></script>
-<script>
-    var user={};
-    var friendsInfo={};
-    function init() {
-        var reqId = requestObj.getRequestID();
-        var message = 'REQ\tCMD_INIT\t'+user.id+'\t00001\t'+reqId+"\t"+"0\t";
-        requestObj.send(message,function(subs){
-            var res = subs[0];
-            console.log(res)
-            var friendsInfoStr = res[6].split('\t',-1);
-            for (var friendInfo in friendsInfoStr){
-                var s = friendsInfoStr[friendInfo].split('|');
-                friendsInfo[s[0]+'']={
-                    'id':s[0],
-                    'name':s[1]
-                };
-            }
-            for(var p in friendsInfo){
-                $("#targetP").append("<option value="+p+">"+friendsInfo[p].name+"</option>");
-            }
-            $('#main').show();
-        })
-    }
-    $('#login_btn').click(function () {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        var reqId = requestObj.getRequestID();
-        var message = 'REQ\tCMD_LOGIN\t'+username+'\t00001\t'+reqId+"\t"+"0\t"+username+"\t"+password;
-        requestObj.send(message,function(subs){
-            var res = subs[0];
-            console.log(res)
-            user.name = res[6];
-            user.id = res[3];
-            alert("welcome"+res[6])
-            init();
-        })
-    })
-    $('#send').click(function(event) {
-        var targetId = $('#targetP').val();
-        var content = $('#content').val();
-        var reqId = requestObj.getRequestID();
-        var message = 'NOTICE\tCMD_TEXT\t'+user.id+'\t'+targetId+'\t'+reqId+"\t"+"0\t"+content+"\t";
-        requestObj.send(message,function(subs){
-            alert("success")
-        });
-    });
-
-
-</script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
