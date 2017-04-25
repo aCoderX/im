@@ -5,6 +5,35 @@ var user={};
 var friendsInfo={};
 var chatRecord={};
 var nowChat;
+
+var noticeCall = {
+    "CMD_TEXT":function (sub) {
+        var targetId = nowChat;
+        var id = sub[2];
+        var li = "";
+        if(id==user.id){
+            //多终端同步消息
+            id=sub[3];
+            li = '<li class="list-group-item my_text">'+sub[6]+'</li>';
+        }else{
+            li = '<li class="list-group-item">'+sub[6]+'</li>';
+        }
+        if(undefined==chatRecord[id+""]){
+            chatRecord[id+'']=[];
+        }
+        chatRecord[id+''].push(li);
+        if(targetId==id){
+            $('#chatPanel .list-group').append(li);
+        }
+    }
+};
+
+//注册notice回调函数
+for(var p in noticeCall){
+    requestObj.registerNoticeCallback(p,noticeCall[p]);
+}
+
+
 function checkFriend(id){
     $('#chat_title').html(friendsInfo[id].name);
     var html="";
@@ -26,10 +55,12 @@ function init() {
     var message = 'REQ\tCMD_INIT\t'+user.id+'\t00001\t'+reqId+"\t"+"0\t";
     requestObj.send(message,function(subs){
         var res = subs[0];
-        console.log(res)
-        var friendsInfoStr = res[6].split('\t',-1);
-        for (var friendInfo in friendsInfoStr){
-            var s = friendsInfoStr[friendInfo].split('|');
+        console.log(res);
+        for(var i=6;i<res.length;i++){
+            if(res[i]==""){
+                continue;
+            }
+            var s = res[i].split('|');
             friendsInfo[s[0]+'']={
                 'id':s[0],
                 'name':s[1]

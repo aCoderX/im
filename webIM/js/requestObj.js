@@ -7,18 +7,6 @@ var requestObj= new function(){
 	var packageNum={};
 
 	var noticeCallBack={
-		"CMD_TEXT":function (sub) {
-            var targetId = nowChat;
-			var id = sub[2];
-            if(undefined==chatRecord[id+""]){
-                chatRecord[id+'']=[];
-            }
-            var li = '<li class="list-group-item">'+sub[6]+'</li>';
-            chatRecord[id+''].push(li);
-            if(targetId==id){
-            	$('#chatPanel .list-group').append(li);
-			}
-        }
 	};
 
 	/*
@@ -128,6 +116,9 @@ var requestObj= new function(){
         return;
     };
 
+    this.registerNoticeCallback = function(cmd,callback){
+        noticeCallBack[cmd]=callback;
+	}
 
 	Chat.initialize();
 

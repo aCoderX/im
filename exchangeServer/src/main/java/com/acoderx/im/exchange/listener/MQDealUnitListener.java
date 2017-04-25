@@ -59,21 +59,34 @@ public class MQDealUnitListener implements MessageListener{
         for(String targetSession : targetSessions){
             DataPacketInner dpiSend = new DataPacketInner(targetSession, dpi.getTargetId(), dp);
             String host = new SessionProperty(targetSession).getHost();
-            if(ExchangeServer.HOST.equals(host)){
-                //本机的session
-                mqSender.send(dpiSend,"EXCHANGE.TO.WEBSOCKET");
-            }else{
-                logger.info("EXCHANGE:"+"接受者不在本机，位于"+host);
-                try {
-                    otherSender.send(host,dpiSend);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    logger.error("EXCHANGE:"+"连接服务器超时");
-                    e.printStackTrace();
-                }
+            sendNotice(host,dpiSend);
+        }
+        //多终端在线
+        String originId = dp.getOriginId();
+        Set<String> targetSelfSessions = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions(originId));
+        for(String targetSelfSession : targetSelfSessions){
+            if(dpi.getSessionID().equals(targetSelfSession)){
+                continue;
             }
-
+            DataPacketInner dpiSend = new DataPacketInner(targetSelfSession, dpi.getTargetId(), dp);
+            String host = new SessionProperty(targetSelfSession).getHost();
+            sendNotice(host,dpiSend);
+        }
+    }
+    private void sendNotice(String host,DataPacketInner dpiSend){
+        if(ExchangeServer.HOST.equals(host)){
+            //本机的session
+            mqSender.send(dpiSend,"EXCHANGE.TO.WEBSOCKET");
+        }else{
+            logger.info("EXCHANGE:"+"接受者不在本机，位于"+host);
+            try {
+                otherSender.send(host,dpiSend);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                logger.error("EXCHANGE:"+"连接服务器超时");
+                e.printStackTrace();
+            }
         }
     }
 }

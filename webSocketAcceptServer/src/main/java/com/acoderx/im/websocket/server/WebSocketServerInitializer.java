@@ -6,6 +6,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslHandler;
 
 /**
  * @author xudi
@@ -14,15 +16,17 @@ import io.netty.handler.codec.http.HttpServerCodec;
 */
 public class WebSocketServerInitializer extends ChannelInitializer {
     private MQSender mqSender;
-    public WebSocketServerInitializer(MQSender mqSender) {
+    private final SslContext sslCtx;
+    public WebSocketServerInitializer(SslContext sslContext, MQSender mqSender) {
+        this.sslCtx = sslContext;
         this.mqSender = mqSender;
     }
-    public WebSocketServerInitializer(){
-        super();
-    };
 
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline p = ch.pipeline();
+        if (sslCtx != null) {
+            p.addLast(sslCtx.newHandler(ch.alloc()));
+        }
         p.addLast(new HttpServerCodec());
         p.addLast(new HttpObjectAggregator(65536));
         p.addLast(new WebSocketServerHandle(mqSender));
