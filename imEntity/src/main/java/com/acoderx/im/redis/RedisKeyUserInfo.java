@@ -55,4 +55,12 @@ public class RedisKeyUserInfo {
             this.type = RedisDataType.SET;
         }
     }
+
+    public static class UserNoticeNum extends RedisKeyClass{
+        public UserNoticeNum(String userid){
+            this.name = "USER:"+userid+":NOTICENUM";
+            this.sync = false;
+            this.type = RedisDataType.ZSET;
+        }
+    }
 }

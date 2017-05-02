@@ -1,5 +1,8 @@
 package com.acoderx.im.exchange.listener;
 
+import com.acoderx.im.data.callback.MySQLOperations;
+import com.acoderx.im.data.mysql.dao.CacheMessageDao;
+import com.acoderx.im.data.mysql.model.CacheMessage;
 import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.entity.*;
 import com.acoderx.im.exchange.main.ExchangeServer;
@@ -51,9 +54,23 @@ public class MQDealUnitListener implements MessageListener{
         RedisOps redisOps = RedisOps.getInstance();
         DataPacket dp = dpi.getMessage();
         String targetId = dp.getTargetId();
+        //记录sync
+        //存入MySQL中 id，发送者，接受者，序号，消息
+        CacheMessageDao cacheMessageDao = MySQLOperations.getInstance().getCacheMessageDao();
+        int syncNo = cacheMessageDao.countSycnNOBySender(Integer.valueOf(dp.getOriginId()))+1;
+        CacheMessage message = new CacheMessage();
+        dp.setRandomNum(syncNo);
+
+        message.setSender(Integer.valueOf(dp.getOriginId()));
+        message.setTarget(Integer.valueOf(targetId));
+        message.setSyncNo(syncNo);
+        message.setMessage(DataPacketUtil.getDataPacketTransform().innerObjectToByte(dpi));
+        cacheMessageDao.setCacheMessage(message);
+
         Set<String> targetSessions = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions(targetId));
         if(targetSessions==null||targetSessions.size()<=0){
             logger.error("EXCHANGE："+"接受者不在线");
+            //TODO 用户不在线，发送到离线消息模块
             return;
         }
         for(String targetSession : targetSessions){
@@ -63,6 +80,7 @@ public class MQDealUnitListener implements MessageListener{
         }
         //多终端在线
         String originId = dp.getOriginId();
+
         Set<String> targetSelfSessions = redisOps.opsForSet().members(new RedisKeyUserInfo.UserSessions(originId));
         for(String targetSelfSession : targetSelfSessions){
             if(dpi.getSessionID().equals(targetSelfSession)){

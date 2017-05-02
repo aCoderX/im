@@ -1,5 +1,6 @@
 //实现socket 一个请求一个回调
 var requestObj= new function(){
+	var SYNC=0;
 	var _self=this;
 
 	var requestID=100;
@@ -38,7 +39,11 @@ var requestObj= new function(){
 			};
 		};
 		this.initialize=function(){
-			this.connect('ws://172.16.192.1:9999');
+			if(window.location.protocol=="https:"){
+				this.connect('wss://172.16.192.1:9999');
+			}else{
+				this.connect('ws://172.16.192.1:9999');
+			}
 			//nginx地址
 			//this.connect('ws://172.16.192.1/im');
 		}
@@ -112,6 +117,18 @@ var requestObj= new function(){
     this.receiveNotice=function(Sub){
         console.log("notice接受数据："+Sub);
         var cmd=Sub[1];
+        var syncNO = Sub[4];
+        if(syncNO-SYNC>1){
+			//发送sync包
+            var message = 'REQ\tCMD_SYNC\t'+user.id+'\t00001\t'+SYNC+"\t"+"0\t";
+            requestObj.send(message);
+            return;
+		}else{
+        	//发送FIN包
+            var message = 'REQ\tCMD_FIN\t'+user.id+'\t00001\t'+SYNC+"\t"+"0\t";
+            requestObj.send(message)
+		}
+		SYNC=syncNO;
         noticeCallBack[cmd](Sub);
         return;
     };

@@ -9,6 +9,8 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslHandler;
 
+import javax.net.ssl.SSLEngine;
+
 /**
  * @author xudi
  * @date 2016/12/26
@@ -25,7 +27,10 @@ public class WebSocketServerInitializer extends ChannelInitializer {
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline p = ch.pipeline();
         if (sslCtx != null) {
-            p.addLast(sslCtx.newHandler(ch.alloc()));
+            SSLEngine sslEngine = sslCtx.newEngine(ch.alloc());
+            sslEngine.setUseClientMode(false);
+            sslEngine.setNeedClientAuth(false);
+            p.addLast(new SslHandler(sslEngine));
         }
         p.addLast(new HttpServerCodec());
         p.addLast(new HttpObjectAggregator(65536));

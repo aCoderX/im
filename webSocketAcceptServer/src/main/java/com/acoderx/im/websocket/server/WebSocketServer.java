@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -26,7 +27,7 @@ import java.security.cert.CertificateException;
 public class WebSocketServer {
     public static final String HOST = System.getProperty("HOST");
     public static final int PORT = Integer.parseInt(System.getProperty("PORT"));
-    static final boolean SSL = System.getProperty("ssl") != null;
+    static final boolean SSL = System.getProperty("SSL") != null;
 
 
     /** 用于分配处理业务线程的线程组个数 */
@@ -48,6 +49,7 @@ public class WebSocketServer {
         }
         final SslContext sslCtx;
         if (SSL) {
+            logger.info("启动ssl");
             SelfSignedCertificate ssc = new SelfSignedCertificate();
             sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
         } else {

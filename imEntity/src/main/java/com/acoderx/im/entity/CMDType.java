@@ -5,5 +5,6 @@ package com.acoderx.im.entity;
  */
 public class CMDType {
     public static final String ACK="ACK";
+    public static final String REQ="REQ";
     public static final String NOTICE="NOTICE";
 }

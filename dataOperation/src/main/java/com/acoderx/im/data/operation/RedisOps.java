@@ -1,19 +1,10 @@
 package com.acoderx.im.data.operation;
 
-import com.acoderx.im.data.redis.interf.HashOperation;
-import com.acoderx.im.data.redis.interf.KeyOperation;
-import com.acoderx.im.data.redis.interf.SetOperation;
-import com.acoderx.im.data.redis.interf.ValueOperation;
-import com.acoderx.im.data.redis.proxy.HashOperationsProx;
-import com.acoderx.im.data.redis.proxy.KeyOperationsProxy;
-import com.acoderx.im.data.redis.proxy.SetOperationsProxy;
-import com.acoderx.im.data.redis.proxy.ValueOperationsProxy;
+import com.acoderx.im.data.redis.interf.*;
+import com.acoderx.im.data.redis.proxy.*;
 import com.acoderx.im.redis.RedisKey;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 
 /**
  * Created by xudi on 2017/2/12.
@@ -42,6 +33,7 @@ public class RedisOps {
     private SetOperation setOps;
     private ValueOperation valueOps;
     private KeyOperation keyOps;
+    private ZSetOperation zsetOps;
     public HashOperation opsForHash(){
         if (hashOps == null) {
             HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
@@ -68,5 +60,12 @@ public class RedisOps {
             keyOps = new KeyOperationsProxy(redisTemplate);
         }
         return keyOps;
+    }
+    public ZSetOperation opsForZset(){
+        if(zsetOps == null){
+            ZSetOperations<String,String> zSetOperations = redisTemplate.opsForZSet();
+            zsetOps = new ZSetOperationProx(zSetOperations);
+        }
+        return zsetOps;
     }
 }
