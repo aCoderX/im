@@ -1,5 +1,6 @@
 package com.acoderx.im.du.logic.login;
 
+import com.acoderx.im.data.callback.MySQLOperations;
 import com.acoderx.im.data.operation.RedisOps;
 import com.acoderx.im.du.logic.common.MessageDeal;
 import com.acoderx.im.du.logic.error.LoginError;
@@ -30,7 +31,10 @@ public class LO_CMD_Login extends MessageDeal {
 			String username = redisOps.opsForHash().get(new RedisKeyUserInfo.UserInfo(id), RedisKeyUserInfo.userInfo_NAME);
 			String password = redisOps.opsForHash().get(new RedisKeyUserInfo.UserInfo(id), RedisKeyUserInfo.userInfo_PASS);
 			if(password.equals(MD5.encoderByMd5WithSalt(pass))){
-				DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(),dp.getTargetId(),id,dp.getRandomNum(),dp.getMsgTime(), StringUtils.subFieldsTostring(Constants.SUCCESS,username));
+				//查询sync值
+				Integer syncNo = MySQLOperations.getInstance().getCacheMessageDao().countSycnNOBySender(Integer.valueOf(id));
+				syncNo=(syncNo==null?1:syncNo+1);
+				DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(),dp.getTargetId(),id,dp.getRandomNum(),dp.getMsgTime(), StringUtils.subFieldsTostring(Constants.SUCCESS,username,syncNo.toString()));
 				dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
 				//将sessionid存入，userid关联sessionid
 				redisOps.opsForSet().add(new RedisKeyUserInfo.UserSessions(id),req.getSessionID());

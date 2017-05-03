@@ -16,10 +16,10 @@ public class MG_CMD_Fin extends MessageDeal {
     @Override
     public DataPacketInner deal(DataPacketInner req) throws Exception {
         DataPacket dp = req.getMessage();
-        String senderID = dp.getOriginId();
+        String targetID = dp.getTargetId();
         String[] result = StringUtils.stringToSubfields(dp.getSubField());
         int syncNo = Integer.valueOf(result[0]);
-        MySQLOperations.getInstance().getCacheMessageDao().finBeforeCacheMessage(Integer.valueOf(senderID),syncNo);
+        MySQLOperations.getInstance().getCacheMessageDao().finBeforeCacheMessage(Integer.valueOf(targetID),syncNo);
         DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(), Constants.SERVER ,dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),Constants.SUCCESS);
         DataPacketInner dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);
         return dpiAck;

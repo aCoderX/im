@@ -57,7 +57,8 @@ public class MQDealUnitListener implements MessageListener{
         //记录sync
         //存入MySQL中 id，发送者，接受者，序号，消息
         CacheMessageDao cacheMessageDao = MySQLOperations.getInstance().getCacheMessageDao();
-        int syncNo = cacheMessageDao.countSycnNOBySender(Integer.valueOf(dp.getOriginId()))+1;
+        Integer syncNo = cacheMessageDao.countSycnNOBySender(Integer.valueOf(dp.getTargetId()));
+        syncNo=syncNo==null?1:syncNo+1;
         CacheMessage message = new CacheMessage();
         dp.setRandomNum(syncNo);
 

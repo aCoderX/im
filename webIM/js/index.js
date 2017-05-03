@@ -84,10 +84,11 @@ $('#login_btn').click(function () {
         var res = subs[0];
         console.log(res)
 
-        if(res[6]=="S"){
+        if(res[6]==="S"){
             alert("welcome"+res[7])
             user.name = res[7];
             user.id = res[3];
+            requestObj.setSync(res[8]);
             init();
         }else{
             alert(res[7]);

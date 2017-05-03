@@ -118,17 +118,20 @@ var requestObj= new function(){
         console.log("notice接受数据："+Sub);
         var cmd=Sub[1];
         var syncNO = Sub[4];
-        if(syncNO-SYNC>1){
-			//发送sync包
-            var message = 'REQ\tCMD_SYNC\t'+user.id+'\t00001\t'+SYNC+"\t"+"0\t";
-            requestObj.send(message);
-            return;
-		}else{
-        	//发送FIN包
-            var message = 'REQ\tCMD_FIN\t'+user.id+'\t00001\t'+SYNC+"\t"+"0\t";
-            requestObj.send(message)
+        if(syncNO!==-1){
+            var reqID= ++requestID;
+            if(syncNO-SYNC>1){
+                //发送sync包
+                var message = 'REQ\tCMD_SYNC\t'+user.id+'\t00001\t'+reqID+"\t"+"0\t"+SYNC;
+                requestObj.send(message,function () {});
+                //return;
+            }else{
+                //发送FIN包
+                var message = 'REQ\tCMD_FIN\t'+user.id+'\t00001\t'+reqID+"\t"+"0\t"+SYNC;
+                requestObj.send(message,function () {})
+            }
+            SYNC=syncNO;
 		}
-		SYNC=syncNO;
         noticeCallBack[cmd](Sub);
         return;
     };
@@ -139,4 +142,7 @@ var requestObj= new function(){
 
 	Chat.initialize();
 
+    this.setSync = function(sync){
+        SYNC=sync;
+    }
 };

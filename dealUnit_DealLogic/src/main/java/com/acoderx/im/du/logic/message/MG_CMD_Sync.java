@@ -5,8 +5,10 @@ import com.acoderx.im.data.mysql.model.CacheMessage;
 import com.acoderx.im.du.logic.common.CO_MQ_Sender;
 import com.acoderx.im.du.logic.common.MessageDeal;
 import com.acoderx.im.entity.*;
+import com.acoderx.im.utils.CollectionUtils;
 import com.acoderx.im.utils.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,13 +19,17 @@ public class MG_CMD_Sync extends MessageDeal {
     @Override
     public DataPacketInner deal(DataPacketInner req) throws Exception {
         DataPacket dp = req.getMessage();
-        String senderID = dp.getOriginId();
+        String targetID = dp.getTargetId();
         String[] result = StringUtils.stringToSubfields(dp.getSubField());
         int syncNo = Integer.valueOf(result[0]);
-        List<CacheMessage> list = MySQLOperations.getInstance().getCacheMessageDao().syncCacheMessage(Integer.valueOf(senderID),syncNo);
-        for (CacheMessage message:list){
-            DataPacketInner dpi = DataPacketUtil.getDataPacketTransform().byteToInnerObject(message.getMessage());
-            sender.send(dpi,"DEALUNIT.TO.EXCHANGE");
+        List<CacheMessage> list = MySQLOperations.getInstance().getCacheMessageDao().syncCacheMessage(Integer.valueOf(targetID),syncNo);
+        if(CollectionUtils.isNotEmpty(list)){
+            for (CacheMessage message:list){
+                DataPacketInner dpi = DataPacketUtil.getDataPacketTransform().byteToInnerObject(message.getMessage());
+                dpi.setSessionID(req.getSessionID());
+                dpi.getMessage().setRandomNum(-1);
+                sender.send(dpi,"DEALUNIT.TO.EXCHANGE");
+            }
         }
         DataPacket dpAck = new DataPacket(CMDType.ACK,dp.getCMD(), Constants.SERVER ,dp.getOriginId(),dp.getRandomNum(),dp.getMsgTime(),Constants.SUCCESS);
         DataPacketInner dpiAck = new DataPacketInner(req.getSessionID(),req.getTargetId(),dpAck);

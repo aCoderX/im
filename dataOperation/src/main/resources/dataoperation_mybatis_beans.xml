@@ -30,6 +30,10 @@
         <property name="mapperInterface" value="com.acoderx.im.data.mysql.dao.SetValueDao"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
     </bean>
+    <bean id="cacheMessageDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.acoderx.im.data.mysql.dao.CacheMessageDao"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
 
 
 
